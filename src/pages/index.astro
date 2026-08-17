@@ -10,20 +10,14 @@ const caseStudies = [
   {
     title: "Mission Control",
     teaser:
-      "A dashboard and agent fleet that runs my homelab: live status, job queues, and agents that pick up work without me.",
-    tags: ["Agents", "Dashboard", "Ops"],
+      "The dashboard and agent fleet that runs my homelab — live status, job queues, and agents that pick up work without being asked. Work gets in by voice too: speak an intent, and an agent loop edits, tests, and reports back with a reviewed change.",
+    tags: ["Agents", "Dashboard", "Voice"],
   },
   {
-    title: "Proxmox homelab migration",
+    title: "The homelab",
     teaser:
-      "Moving a four-node fleet onto Proxmox, with sandboxed agent VMs doing the heavy lifting under a written runbook.",
-    tags: ["Proxmox", "Infra", "Automation"],
-  },
-  {
-    title: "Voice-to-code pipeline",
-    teaser:
-      "Speak an intent, get a reviewed change: transcription into an agent loop that edits, tests, and reports back.",
-    tags: ["Speech", "LLM", "Tooling"],
+      "Four Proxmox nodes running the services I depend on, plus sandboxed VMs where agents can work without touching anything that matters. Built by migrating off bare metal one node at a time, against a runbook, with no unplanned downtime.",
+    tags: ["Proxmox", "Infra", "Self-hosted"],
   },
 ];
 ---
@@ -152,17 +146,19 @@ const caseStudies = [
     padding: 0;
   }
 
+  /* Two case studies, so the min track is wide enough that the grid resolves to
+     a 2-up and never tries for a thin third column. */
   .cards {
     display: grid;
     gap: var(--space-md);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
   }
 
   .card {
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
-    padding: var(--space-md);
+    padding: var(--space-lg);
     border-radius: var(--radius-lg);
     border: var(--border-hairline) solid var(--color-border);
     background: var(--color-surface);
@@ -183,7 +179,7 @@ const caseStudies = [
 
   .card__teaser {
     color: var(--color-text-muted);
-    font-size: var(--text-sm);
+    font-size: var(--text-md);
   }
 
   .card__tags {
