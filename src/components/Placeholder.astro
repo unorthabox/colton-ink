@@ -1,0 +1,43 @@
+---
+/**
+ * A deliberately blank slot for content that is queued but not yet supplied
+ * (models, photos, tracks). Reads as a designed empty state rather than a
+ * broken page, and is meant to be deleted as each section fills in.
+ */
+interface Props {
+  label: string;
+  /** CSS aspect-ratio for the box, e.g. "4 / 3". */
+  ratio?: string;
+}
+
+const { label, ratio = "4 / 3" } = Astro.props;
+---
+
+<div class="placeholder" style={`aspect-ratio: ${ratio};`}>
+  <span class="placeholder__label">{label}</span>
+</div>
+
+<style>
+  .placeholder {
+    display: grid;
+    place-items: center;
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+    border: var(--border-hairline) dashed
+      color-mix(in oklab, var(--section-accent) 40%, var(--color-border));
+    background: linear-gradient(
+      140deg,
+      color-mix(in oklab, var(--section-accent) 7%, transparent),
+      transparent 65%
+    );
+    color: var(--color-text-muted);
+  }
+
+  .placeholder__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-align: center;
+    text-wrap: balance;
+  }
+</style>

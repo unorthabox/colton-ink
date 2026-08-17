@@ -1,0 +1,29 @@
+---
+import SectionHeader from "./SectionHeader.astro";
+
+interface Props {
+  id: string;
+  eyebrow: string;
+  title: string;
+  lede?: string;
+  /** Token name (e.g. "--hue-print") that tints everything inside. */
+  accent: string;
+}
+
+const { id, eyebrow, title, lede, accent } = Astro.props;
+---
+
+<section class="section" id={id} style={`--section-accent: var(${accent});`}>
+  <div class="container container--wide">
+    <SectionHeader eyebrow={eyebrow} title={title} lede={lede} />
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+    scroll-margin-top: var(--nav-height);
+    border-top: var(--border-hairline) solid var(--color-border);
+  }
+</style>

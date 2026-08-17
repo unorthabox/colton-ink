@@ -1,0 +1,58 @@
+---
+import "../styles/tokens.css";
+import "../styles/base.css";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import { site } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = `${site.name} — ${site.tagline}`, description = site.description } =
+  Astro.props;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Applies the stored theme before first paint so there is no flash, and
+         marks the document as JS-capable for progressive enhancement. -->
+    <script is:inline>
+      (() => {
+        document.documentElement.classList.add("js");
+        try {
+          const saved = localStorage.getItem("colton-ink-theme");
+          if (saved === "light" || saved === "dark") {
+            document.documentElement.dataset.theme = saved;
+          }
+        } catch {
+          /* private mode — fall back to the system preference */
+        }
+      })();
+    </script>
+  </head>
+
+  <body>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

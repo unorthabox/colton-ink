@@ -1,0 +1,268 @@
+---
+import Base from "../layouts/Base.astro";
+import Hero from "../components/Hero.astro";
+import Section from "../components/Section.astro";
+import Placeholder from "../components/Placeholder.astro";
+import { site } from "../data/site";
+
+/** Case studies get full 150–250 word writeups once screenshots land. */
+const caseStudies = [
+  {
+    title: "Mission Control",
+    teaser:
+      "A dashboard and agent fleet that runs my homelab: live status, job queues, and agents that pick up work without me.",
+    tags: ["Agents", "Dashboard", "Ops"],
+  },
+  {
+    title: "Proxmox homelab migration",
+    teaser:
+      "Moving a four-node fleet onto Proxmox, with sandboxed agent VMs doing the heavy lifting under a written runbook.",
+    tags: ["Proxmox", "Infra", "Automation"],
+  },
+  {
+    title: "Voice-to-code pipeline",
+    teaser:
+      "Speak an intent, get a reviewed change: transcription into an agent loop that edits, tests, and reports back.",
+    tags: ["Speech", "LLM", "Tooling"],
+  },
+];
+---
+
+<Base>
+  <Hero />
+
+  <Section
+    id="ai"
+    accent="--hue-ai"
+    eyebrow="Agents, fleets, and pipelines"
+    title="AI Engineering"
+    lede="Systems that do real operational work — not demos. Each of these runs on hardware in my house, every day."
+  >
+    <ul class="cards">
+      {
+        caseStudies.map((study) => (
+          <li class="card">
+            <h3 class="card__title">{study.title}</h3>
+            <p class="card__teaser">{study.teaser}</p>
+            <ul class="card__tags">
+              {study.tags.map((tag) => (
+                <li class="tag">{tag}</li>
+              ))}
+            </ul>
+            <p class="card__note">Case study in progress</p>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <Section
+    id="printing"
+    accent="--hue-print"
+    eyebrow="Design, slice, monitor, print"
+    title="3D Printing"
+    lede="Models I designed and printed, plus the monitoring pipeline that watches the printer so I don't have to."
+  >
+    <div class="grid grid--gallery">
+      <Placeholder label="GLB model — orbit viewer" ratio="1 / 1" />
+      <Placeholder label="GLB model — orbit viewer" ratio="1 / 1" />
+      <Placeholder label="GLB model — orbit viewer" ratio="1 / 1" />
+    </div>
+    <div class="note">
+      <p>
+        Next up here: the Bambu MQTT monitoring and timelapse pipeline, written
+        up as a case study with footage.
+      </p>
+    </div>
+  </Section>
+
+  <Section
+    id="music"
+    accent="--hue-music"
+    eyebrow="Production and sound design"
+    title="Music"
+    lede="Tracks I wrote and produced. Waveform players land with the audio."
+  >
+    <div class="grid grid--tracks">
+      <Placeholder label="Track 01 — waveform player" ratio="6 / 1" />
+      <Placeholder label="Track 02 — waveform player" ratio="6 / 1" />
+      <Placeholder label="Track 03 — waveform player" ratio="6 / 1" />
+    </div>
+  </Section>
+
+  <Section
+    id="art"
+    accent="--hue-art"
+    eyebrow="Paint now, VR murals next"
+    title="Art"
+    lede="Paintings, photographed straight-on. The next canvas is room-sized — murals painted in VR on a Quest."
+  >
+    <div class="grid grid--gallery">
+      <Placeholder label="Painting photo" ratio="3 / 4" />
+      <Placeholder label="Painting photo" ratio="3 / 4" />
+      <Placeholder label="Painting photo" ratio="3 / 4" />
+    </div>
+  </Section>
+
+  <Section
+    id="robotics"
+    accent="--hue-robotics"
+    eyebrow="Build log — in progress"
+    title="Robotics"
+    lede="The newest discipline, documented honestly as I learn it: what I'm building, what broke, and what it taught me."
+  >
+    <div class="note">
+      <p>
+        Build log entries start as soon as the first chassis moves under its own
+        power. Expect parts lists, failures, and short clips — not a finished
+        showreel.
+      </p>
+    </div>
+  </Section>
+
+  <Section
+    id="about"
+    accent="--color-accent"
+    eyebrow="Who's behind all this"
+    title="About & Contact"
+  >
+    <div class="about">
+      <div class="prose">
+        <p>
+          I'm Colton — an engineer who keeps ending up wherever software meets
+          something physical. Days go to AI systems and infrastructure; the rest
+          goes to printers, paint, and a DAW.
+        </p>
+        <p class="about__pending">Full bio and resume link coming shortly.</p>
+      </div>
+      <div class="about__links">
+        <a class="about__link" href={`mailto:${site.email}`}>{site.email}</a>
+        <a class="about__link" href={site.github} rel="me noopener"
+          >github.com/unorthabox</a
+        >
+      </div>
+    </div>
+  </Section>
+</Base>
+
+<style>
+  .cards,
+  .card__tags {
+    list-style: none;
+    padding: 0;
+  }
+
+  .cards {
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+    border: var(--border-hairline) solid var(--color-border);
+    background: var(--color-surface);
+    transition: border-color var(--duration-base) var(--ease-out),
+      transform var(--duration-base) var(--ease-out),
+      box-shadow var(--duration-base) var(--ease-out);
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in oklab, var(--section-accent) 55%, transparent);
+    box-shadow: var(--shadow-md);
+  }
+
+  .card__title {
+    font-size: var(--text-lg);
+  }
+
+  .card__teaser {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3xs);
+    margin-top: auto;
+  }
+
+  .tag {
+    padding: var(--space-3xs) var(--space-xs);
+    border-radius: var(--radius-pill);
+    background: color-mix(in oklab, var(--section-accent) 12%, transparent);
+    color: var(--section-accent);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .card__note,
+  .about__pending {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-text-muted);
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .grid--gallery {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  }
+
+  .grid--tracks {
+    grid-template-columns: 1fr;
+  }
+
+  .note {
+    margin-top: var(--space-lg);
+    padding-left: var(--space-sm);
+    border-left: var(--border-thick) solid
+      color-mix(in oklab, var(--section-accent) 60%, transparent);
+    color: var(--color-text-muted);
+    max-width: var(--width-prose);
+  }
+
+  .about {
+    display: grid;
+    gap: var(--space-xl);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 52rem) {
+    .about {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    }
+  }
+
+  .about__links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .about__link {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .about__link:hover {
+    color: var(--section-accent);
+  }
+
+  .about .prose p + p {
+    margin-top: var(--space-sm);
+  }
+</style>

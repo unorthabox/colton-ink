@@ -1,0 +1,101 @@
+---
+import { sections, site } from "../data/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer__inner container container--wide">
+    <div class="footer__brand">
+      <p class="footer__name">{site.name}</p>
+      <p class="footer__tagline">{site.tagline}</p>
+    </div>
+
+    <nav class="footer__nav" aria-label="Sections">
+      {
+        sections.map((section) => (
+          <a
+            class="footer__link"
+            href={`#${section.id}`}
+            style={`--section-accent: var(${section.accent});`}
+          >
+            {section.title}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="footer__contact">
+      <a class="footer__link" href={site.github} rel="me noopener">GitHub</a>
+      <a class="footer__link" href={`mailto:${site.email}`}>Email</a>
+    </div>
+  </div>
+
+  <p class="footer__legal container container--wide">
+    <span>© {year} {site.name}</span>
+    <span class="footer__built">Built with Astro · deployed on push</span>
+  </p>
+</footer>
+
+<style>
+  .footer {
+    margin-top: var(--space-section);
+    padding-block: var(--space-2xl) var(--space-lg);
+    border-top: var(--border-hairline) solid var(--color-border);
+    background: var(--color-bg-subtle);
+  }
+
+  .footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xl);
+    justify-content: space-between;
+  }
+
+  .footer__name {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    color: var(--color-text-strong);
+  }
+
+  .footer__tagline {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .footer__nav,
+  .footer__contact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .footer__link {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    width: fit-content;
+  }
+
+  .footer__link:hover {
+    color: var(--section-accent);
+  }
+
+  .footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    justify-content: space-between;
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: var(--border-hairline) solid var(--color-border);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+
+  .footer__built {
+    font-family: var(--font-mono);
+  }
+</style>
