@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# originals live outside the repo (~/assets-archive); only processed,
+# EXIF-stripped derivatives are committed

@@ -7,11 +7,14 @@ export const site = {
   name: "Colton Spahmer",
   domain: "colton.ink",
   url: "https://colton.ink",
-  tagline: "engineer · maker · artist",
+  tagline: "network + AI engineer · maker · artist",
   description:
-    "AI engineering, 3D printing, music production, painting, and robotics — the work of Colton Spahmer.",
+    "Network engineering, AI systems, 3D printing, music production, painting, and robotics — the work of Colton Spahmer.",
   email: "[redacted]",
   github: "https://github.com/unorthabox",
+  linkedin: "https://linkedin.com/in/coltonspahmer",
+  /** Redacted web copy — the full version goes out with applications. */
+  resume: "/resume.pdf",
 } as const;
 
 export type Section = {
@@ -28,6 +31,13 @@ export type Section = {
 };
 
 export const sections: Section[] = [
+  {
+    id: "networks",
+    label: "Networks",
+    title: "Network Engineering",
+    eyebrow: "Seven years in carrier and enterprise networks",
+    accent: "--hue-network",
+  },
   {
     id: "ai",
     label: "AI",

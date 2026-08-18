@@ -32,6 +32,7 @@
   --ink-0: #ffffff;
 
   /* Discipline hues. Each section of the site owns one. */
+  --hue-network: #7d8cff; /* Network engineering — link indigo */
   --hue-ai: #3fc8ff; /* AI engineering — signal cyan */
   --hue-print: #ff9d3f; /* 3D printing   — hot-end amber */
   --hue-music: #a78bfa; /* Music         — violet */
@@ -39,6 +40,7 @@
   --hue-robotics: #5ee6a0; /* Robotics      — servo green */
 
   /* Deeper variants, for text-on-light and fills that need weight. */
+  --hue-network-deep: #3a44c9;
   --hue-ai-deep: #0a6f96;
   --hue-print-deep: #a4560b;
   --hue-music-deep: #5b3fc4;
@@ -184,6 +186,7 @@
     --color-selection-bg: var(--hue-ai-deep);
     --color-selection-text: var(--ink-0);
 
+    --hue-network: var(--hue-network-deep);
     --hue-ai: var(--hue-ai-deep);
     --hue-print: var(--hue-print-deep);
     --hue-music: var(--hue-music-deep);
@@ -216,6 +219,7 @@
   --color-selection-bg: var(--hue-ai-deep);
   --color-selection-text: var(--ink-0);
 
+  --hue-network: var(--hue-network-deep);
   --hue-ai: var(--hue-ai-deep);
   --hue-print: var(--hue-print-deep);
   --hue-music: var(--hue-music-deep);

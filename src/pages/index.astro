@@ -3,7 +3,32 @@ import Base from "../layouts/Base.astro";
 import Hero from "../components/Hero.astro";
 import Section from "../components/Section.astro";
 import Placeholder from "../components/Placeholder.astro";
+import { Image } from "astro:assets";
 import { site } from "../data/site";
+import portrait from "../assets/about/colton-portrait.jpg";
+import pcBuild from "../assets/homelab/pc-build.jpg";
+
+/** Drawn from the resume — capabilities, not a job-history dump. */
+const networkWork = [
+  {
+    title: "Multi-vendor integration",
+    teaser:
+      "Integrated RAD hardware into Ciena and Cisco environments across 50–100+ client sites, as the subject-matter expert for the Megaplex-4100 and Megaplex-1 platforms.",
+    tags: ["Cisco IOS", "Ciena", "RAD"],
+  },
+  {
+    title: "Carrier Ethernet & WAN",
+    teaser:
+      "Engineered and deployed Ethernet and WAN circuits against enterprise requirements — ETX-series and Megaplex platforms, legacy MP-2100, and AirMux wireless links.",
+    tags: ["BGP", "OSPF", "VLANs"],
+  },
+  {
+    title: "Outage response",
+    teaser:
+      "Diagnosed service-affecting outages and drove escalations to resolution across a large client portfolio, as the primary technical contact turning failures into fix plans.",
+    tags: ["Escalation", "Troubleshooting", "Client-facing"],
+  },
+];
 
 /** Case studies get full 150–250 word writeups once screenshots land. */
 const caseStudies = [
@@ -24,6 +49,37 @@ const caseStudies = [
 
 <Base>
   <Hero />
+
+  <Section
+    id="networks"
+    accent="--hue-network"
+    eyebrow="Seven years in carrier and enterprise networks"
+    title="Network Engineering"
+    lede="Cisco IOS, BGP, OSPF, and carrier Ethernet — the layer everything else on this page runs on top of."
+  >
+    <ul class="cards">
+      {
+        networkWork.map((item) => (
+          <li class="card">
+            <h3 class="card__title">{item.title}</h3>
+            <p class="card__teaser">{item.teaser}</p>
+            <ul class="card__tags">
+              {item.tags.map((tag) => (
+                <li class="tag">{tag}</li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="note">
+      <p>
+        B.S. in Information Security and Forensics, Rochester Institute of
+        Technology — High Honors. Full history in the
+        <a href={site.resume}>resume</a>.
+      </p>
+    </div>
+  </Section>
 
   <Section
     id="ai"
@@ -48,6 +104,19 @@ const caseStudies = [
         ))
       }
     </ul>
+    <figure class="figure">
+      <Image
+        src={pcBuild}
+        alt="Two PC cases open on a workbench mid-build, one black and one white, with an AIO cooler, graphics card, and loose cabling visible."
+        widths={[640, 1024, 1600]}
+        sizes="(min-width: 60rem) 60rem, 100vw"
+        loading="lazy"
+      />
+      <figcaption>
+        Two of the fleet's machines mid-build. The homelab is hardware I
+        assembled, not appliances I bought.
+      </figcaption>
+    </figure>
   </Section>
 
   <Section
@@ -121,19 +190,43 @@ const caseStudies = [
     title="About & Contact"
   >
     <div class="about">
-      <div class="prose">
-        <p>
-          I'm Colton — an engineer who keeps ending up wherever software meets
-          something physical. Days go to AI systems and infrastructure; the rest
-          goes to printers, paint, and a DAW.
-        </p>
-        <p class="about__pending">Full bio and resume link coming shortly.</p>
+      <div class="about__portrait">
+        <Image
+          src={portrait}
+          alt="Colton Spahmer on a boat at golden hour, in a wide-brimmed hat and fishing vest, holding a largemouth bass."
+          widths={[320, 640, 900]}
+          sizes="(min-width: 52rem) 22rem, 100vw"
+          loading="lazy"
+        />
       </div>
-      <div class="about__links">
-        <a class="about__link" href={`mailto:${site.email}`}>{site.email}</a>
-        <a class="about__link" href={site.github} rel="me noopener"
-          >github.com/unorthabox</a
-        >
+
+      <div class="about__body">
+        <div class="prose">
+          <p>
+            I'm Colton — a network engineer by trade and a builder by default.
+            Seven years of Cisco IOS, BGP, and carrier Ethernet taught me how
+            real infrastructure fails, which is why the AI systems I build now
+            run on hardware I racked myself.
+          </p>
+          <p>
+            B.S. in Information Security and Forensics from RIT, High Honors.
+            Off the clock it's paint, printers, a DAW, and a fly rod — the
+            fish above being the one time all of that stopped at once.
+          </p>
+        </div>
+
+        <div class="about__links">
+          <a class="about__link" href={`mailto:${site.email}`}>{site.email}</a>
+          <a class="about__link" href={site.linkedin} rel="me noopener"
+            >linkedin.com/in/coltonspahmer</a
+          >
+          <a class="about__link" href={site.github} rel="me noopener"
+            >github.com/unorthabox</a
+          >
+          <a class="about__link about__link--cta" href={site.resume}>
+            Resume (PDF)
+          </a>
+        </div>
       </div>
     </div>
   </Section>
@@ -228,16 +321,52 @@ const caseStudies = [
     max-width: var(--width-prose);
   }
 
+  .figure {
+    margin: var(--space-xl) 0 0;
+  }
+
+  .figure :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    border: var(--border-hairline) solid var(--color-border);
+  }
+
+  .figure figcaption {
+    margin-top: var(--space-xs);
+    padding-left: var(--space-sm);
+    border-left: var(--border-thick) solid
+      color-mix(in oklab, var(--section-accent) 60%, transparent);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    max-width: var(--width-prose);
+  }
+
   .about {
     display: grid;
     gap: var(--space-xl);
     grid-template-columns: 1fr;
+    align-items: start;
   }
 
   @media (min-width: 52rem) {
     .about {
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
     }
+  }
+
+  .about__portrait :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    border: var(--border-hairline) solid var(--color-border);
+    box-shadow: var(--shadow-md);
+  }
+
+  .about__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
   }
 
   .about__links {
@@ -255,6 +384,23 @@ const caseStudies = [
   }
 
   .about__link:hover {
+    color: var(--section-accent);
+  }
+
+  .about__link--cta {
+    margin-top: var(--space-2xs);
+    padding: var(--space-2xs) var(--space-sm);
+    border-radius: var(--radius-pill);
+    border: var(--border-hairline) solid var(--color-border-strong);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-weight: var(--weight-semibold);
+    width: fit-content;
+    word-break: normal;
+  }
+
+  .about__link--cta:hover {
+    border-color: var(--section-accent);
     color: var(--section-accent);
   }
 
