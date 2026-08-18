@@ -22,6 +22,25 @@ npm run build           # → dist/
 npm run preview         # serve the built output
 ```
 
+## Resume
+
+`resume/resume.html` is the source; `public/resume.pdf` is generated from it.
+
+```bash
+npm run resume     # weasyprint resume/resume.html -> public/resume.pdf
+```
+
+It links `src/styles/tokens.css` with `data-theme="light"`, so the resume takes
+its colours from the same tokens as the site — restyle the site and the resume
+follows. `resume/resume.css` holds print-only sizing in `pt`, because the
+site's fluid `vw`-based type scale means nothing on a fixed page.
+
+WeasyPrint is a system dependency (`apt install weasyprint`) and is NOT part of
+the Cloudflare build — regenerate locally and commit the PDF.
+
+The published copy is redacted: no phone number, no street-level location. The
+full version lives outside this repo and goes out with applications.
+
 ## Design system rules
 
 The site is a token + component system so it can be edited visually at

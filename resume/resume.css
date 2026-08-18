@@ -1,0 +1,223 @@
+/* ============================================================================
+   Resume — print stylesheet
+   Colours come from the site's tokens.css (light theme). Sizing is defined
+   here in pt, because the site's fluid vw-based type scale is meaningless on
+   a fixed page.
+   ========================================================================= */
+
+@page {
+  size: Letter;
+  margin: 13mm 15mm 12mm;
+
+  @bottom-right {
+    content: "Colton Spahmer · page " counter(page) " of " counter(pages);
+    font-family: "Liberation Sans", sans-serif;
+    font-size: 7.5pt;
+    color: #6b7280;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  font-family: "Liberation Sans", Arial, sans-serif;
+  font-size: 9.4pt;
+  line-height: 1.42;
+  color: var(--ink-900);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* --- Masthead ----------------------------------------------------------- */
+
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 3mm;
+  border-bottom: 2pt solid var(--hue-network-deep);
+}
+
+.masthead__id {
+  padding-right: 10mm;
+}
+
+.masthead h1 {
+  font-size: 25pt;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: var(--ink-1000);
+}
+
+.masthead__role {
+  margin-top: 1.2mm;
+  font-size: 10pt;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--hue-network-deep);
+}
+
+.masthead__contact {
+  list-style: none;
+  padding: 0;
+  text-align: right;
+  font-size: 8.6pt;
+  line-height: 1.5;
+  color: var(--ink-600);
+}
+
+/* --- Section headings --------------------------------------------------- */
+
+.section-title {
+  font-size: 8.6pt;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hue-network-deep);
+  margin: 5mm 0 2.3mm;
+  padding-bottom: 1.2mm;
+  border-bottom: 0.5pt solid var(--ink-200);
+}
+
+.summary {
+  margin-top: 3.5mm;
+  font-size: 9.6pt;
+  color: var(--ink-800);
+}
+
+/* --- Roles -------------------------------------------------------------- */
+
+.role {
+  margin-bottom: 3.1mm;
+  /* Never strand a job title alone at the foot of a page. */
+  break-inside: avoid;
+}
+
+.role__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.role__title {
+  font-size: 10.6pt;
+  font-weight: 700;
+  color: var(--ink-1000);
+}
+
+.role__meta {
+  font-size: 8.4pt;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--ink-500);
+  padding-left: 6mm;
+}
+
+.role__org {
+  font-size: 9pt;
+  font-weight: 600;
+  color: var(--hue-network-deep);
+  margin-bottom: 1.4mm;
+}
+
+.role__points {
+  margin: 0;
+  padding-left: 4.2mm;
+}
+
+.role__points li {
+  margin-bottom: 0.7mm;
+  padding-left: 0.6mm;
+}
+
+.role__points li::marker {
+  color: var(--hue-network-deep);
+}
+
+.earlier {
+  margin-top: 1mm;
+  padding-top: 2mm;
+  border-top: 0.5pt dotted var(--ink-200);
+  font-size: 8.6pt;
+  color: var(--ink-600);
+}
+
+.earlier__label {
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 7.6pt;
+  color: var(--ink-500);
+  margin-right: 1.5mm;
+}
+
+/* --- Education ---------------------------------------------------------- */
+
+.edu {
+  margin-bottom: 2.4mm;
+  break-inside: avoid;
+}
+
+.edu__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.edu__degree {
+  font-size: 9.8pt;
+  font-weight: 700;
+  color: var(--ink-1000);
+}
+
+.edu__school {
+  font-size: 9pt;
+  color: var(--ink-600);
+}
+
+/* --- Skills ------------------------------------------------------------- */
+
+.skills {
+  margin: 0;
+}
+
+.skills__group {
+  display: flex;
+  margin-bottom: 1.8mm;
+  break-inside: avoid;
+}
+
+.skills dt {
+  flex: 0 0 32mm;
+  padding-right: 4mm;
+  font-weight: 700;
+  font-size: 8.8pt;
+  color: var(--ink-800);
+}
+
+.skills dd {
+  margin: 0;
+  font-size: 8.8pt;
+  color: var(--ink-600);
+}
+
+.beyond {
+  font-size: 9pt;
+  color: var(--ink-700);
+}
+
+.beyond a {
+  color: var(--hue-network-deep);
+  font-weight: 600;
+}
+
+.avoid-break {
+  break-inside: avoid;
+}

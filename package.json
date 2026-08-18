@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "resume": "weasyprint resume/resume.html public/resume.pdf"
   },
   "dependencies": {
     "astro": "^7.2.2"
