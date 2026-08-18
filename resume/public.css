@@ -1,0 +1,10 @@
+/* Overlay for the published copy of the resume.
+
+   Applied with `weasyprint -s resume/public.css`. Anything marked .private is
+   dropped before rendering, so it never reaches the PDF's text layer — this is
+   removal, not concealment. The full copy (with contact details) is built by
+   `npm run resume:full` and written outside the repo. */
+
+.private {
+  display: none;
+}

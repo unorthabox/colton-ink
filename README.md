@@ -27,8 +27,15 @@ npm run preview         # serve the built output
 `resume/resume.html` is the source; `public/resume.pdf` is generated from it.
 
 ```bash
-npm run resume     # weasyprint resume/resume.html -> public/resume.pdf
+npm run resume       # published copy -> public/resume.pdf (no contact email)
+npm run resume:full  # full copy -> ~/assets-archive/ (outside the repo)
 ```
+
+Two builds from one source. `resume/public.css` sets `display: none` on
+anything marked `.private`, which keeps it out of the rendered page *and* the
+PDF's text layer — removal, not concealment. The email is `.private`, so the
+published copy routes contact through LinkedIn while the full copy, built
+outside the repo, keeps the address for applications.
 
 It links `src/styles/tokens.css` with `data-theme="light"`, so the resume takes
 its colours from the same tokens as the site — restyle the site and the resume
