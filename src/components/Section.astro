@@ -1,6 +1,10 @@
 ---
 import SectionHeader from "./SectionHeader.astro";
 
+/**
+ * A subsection inside a Chapter. Sets --section-accent once; everything
+ * nested — eyebrows, rules, tags, hovers — inherits it.
+ */
 interface Props {
   id: string;
   eyebrow: string;
@@ -15,15 +19,19 @@ const { id, eyebrow, title, lede, accent } = Astro.props;
 
 <section class="section" id={id} style={`--section-accent: var(${accent});`}>
   <div class="container container--wide">
-    <SectionHeader eyebrow={eyebrow} title={title} lede={lede} />
+    <SectionHeader eyebrow={eyebrow} title={title} lede={lede} level={3} />
     <slot />
   </div>
 </section>
 
 <style>
   .section {
-    padding-block: var(--space-section);
+    padding-block: var(--space-xl);
     scroll-margin-top: var(--nav-height);
+  }
+
+  /* Hairline between siblings only — the chapter header supplies the first. */
+  .section + .section {
     border-top: var(--border-hairline) solid var(--color-border);
   }
 </style>

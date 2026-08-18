@@ -1,5 +1,5 @@
 ---
-import { sections, site } from "../data/site";
+import { about, chapters, site } from "../data/site";
 ---
 
 <a class="skip" href="#main">Skip to content</a>
@@ -13,16 +13,17 @@ import { sections, site } from "../data/site";
 
     <nav class="nav__links" aria-label="Sections">
       {
-        sections.map((section) => (
+        chapters.map((chapter) => (
           <a
             class="nav__link"
-            href={`#${section.id}`}
-            style={`--section-accent: var(${section.accent});`}
+            href={`#${chapter.id}`}
+            style={`--section-accent: var(${chapter.accent});`}
           >
-            {section.label}
+            {chapter.label}
           </a>
         ))
       }
+      <a class="nav__link" href={`#${about.id}`}>{about.label}</a>
     </nav>
 
     <button

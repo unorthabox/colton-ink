@@ -1,6 +1,10 @@
 /**
  * Site-wide constants. Nav, footer, and the page outline all read from here so
- * there is exactly one list of sections to keep in order.
+ * there is exactly one list of chapters to keep in order.
+ *
+ * The page is two chapters — Engineering, then Studio — followed by About.
+ * Professional work reads first because hiring managers skim top-down and
+ * stop; the creative work follows to humanize rather than to compete.
  */
 
 export const site = {
@@ -17,67 +21,95 @@ export const site = {
   resume: "/resume.pdf",
 } as const;
 
-export type Section = {
+export type Subsection = {
   /** Anchor id, also the URL fragment. */
   id: string;
-  /** Short label for the nav. */
-  label: string;
-  /** Full heading used in the section itself. */
+  /** Full heading used in the subsection itself. */
   title: string;
   /** Small line above the heading. */
   eyebrow: string;
-  /** Token name driving this section's accent colour. */
+  /** Token name driving this subsection's accent colour. */
   accent: string;
 };
 
-export const sections: Section[] = [
+export type Chapter = {
+  id: string;
+  /** Short label for the nav. */
+  label: string;
+  title: string;
+  lede: string;
+  accent: string;
+  subsections: Subsection[];
+};
+
+export const chapters: Chapter[] = [
   {
-    id: "networks",
-    label: "Networks",
-    title: "Network Engineering",
-    eyebrow: "Seven years in carrier and enterprise networks",
+    id: "engineering",
+    label: "Engineering",
+    title: "Engineering",
+    lede: "Seven years keeping carrier networks alive, and everything I've built on top of them since — agents, fleets, and the machines they run on.",
     accent: "--hue-network",
+    subsections: [
+      {
+        id: "networks",
+        title: "Network Engineering",
+        eyebrow: "Carrier and enterprise networks",
+        accent: "--hue-network",
+      },
+      {
+        id: "ai",
+        title: "AI Systems",
+        eyebrow: "Agents, fleets, and pipelines",
+        accent: "--hue-ai",
+      },
+      {
+        id: "printing",
+        title: "The Print Pipeline",
+        eyebrow: "Design, slice, monitor, print",
+        accent: "--hue-print",
+      },
+      {
+        id: "robotics",
+        title: "Robotics",
+        eyebrow: "Build log — in progress",
+        accent: "--hue-robotics",
+      },
+    ],
   },
   {
-    id: "ai",
-    label: "AI",
-    title: "AI Engineering",
-    eyebrow: "Agents, fleets, and pipelines",
-    accent: "--hue-ai",
-  },
-  {
-    id: "printing",
-    label: "3D",
-    title: "3D Printing",
-    eyebrow: "Design, slice, monitor, print",
-    accent: "--hue-print",
-  },
-  {
-    id: "music",
-    label: "Music",
-    title: "Music",
-    eyebrow: "Production and sound design",
-    accent: "--hue-music",
-  },
-  {
-    id: "art",
-    label: "Art",
-    title: "Art",
-    eyebrow: "Paint now, VR murals next",
+    id: "studio",
+    label: "Studio",
+    title: "Studio",
+    lede: "Off the clock it's paint, plaster, grout, a DAW, and a printer making objects instead of parts.",
     accent: "--hue-art",
-  },
-  {
-    id: "robotics",
-    label: "Robotics",
-    title: "Robotics",
-    eyebrow: "Build log — in progress",
-    accent: "--hue-robotics",
-  },
-  {
-    id: "about",
-    label: "About",
-    title: "About & Contact",
-    eyebrow: "Who's behind all this",
-    accent: "--color-accent",
+    subsections: [
+      {
+        id: "art",
+        title: "Art",
+        eyebrow: "Paint, plaster, grout",
+        accent: "--hue-art",
+      },
+      {
+        id: "music",
+        title: "Music",
+        eyebrow: "Production and sound design",
+        accent: "--hue-music",
+      },
+      {
+        id: "objects",
+        title: "Printed Objects",
+        eyebrow: "Modelled, printed, kept",
+        accent: "--hue-print",
+      },
+    ],
   },
 ];
+
+/** About sits outside the chapters — it closes the page. */
+export const about = {
+  id: "about",
+  label: "About",
+  title: "About & Contact",
+  eyebrow: "Who's behind all this",
+  accent: "--color-accent",
+} as const;

@@ -1,12 +1,17 @@
 ---
 import Base from "../layouts/Base.astro";
 import Hero from "../components/Hero.astro";
+import Chapter from "../components/Chapter.astro";
 import Section from "../components/Section.astro";
 import Placeholder from "../components/Placeholder.astro";
 import { Image } from "astro:assets";
-import { site } from "../data/site";
+import { about, chapters, site } from "../data/site";
 import portrait from "../assets/about/colton-portrait.jpg";
 import pcBuild from "../assets/homelab/pc-build.jpg";
+
+const [engineering, studio] = chapters;
+const sub = (chapter: (typeof chapters)[number], id: string) =>
+  chapter.subsections.find((s) => s.id === id)!;
 
 /** Drawn from the resume — capabilities, not a job-history dump. */
 const networkWork = [
@@ -45,205 +50,220 @@ const caseStudies = [
     tags: ["Proxmox", "Infra", "Self-hosted"],
   },
 ];
+
+const media = [
+  { label: "Painting", accent: "--hue-art" },
+  { label: "Sculpture", accent: "--hue-art" },
+  { label: "Mosaic", accent: "--hue-art" },
+];
 ---
 
 <Base>
   <Hero />
 
-  <Section
-    id="networks"
-    accent="--hue-network"
-    eyebrow="Seven years in carrier and enterprise networks"
-    title="Network Engineering"
-    lede="Cisco IOS, BGP, OSPF, and carrier Ethernet — the layer everything else on this page runs on top of."
+  <Chapter
+    id={engineering.id}
+    title={engineering.title}
+    lede={engineering.lede}
+    accent={engineering.accent}
+    index="01"
   >
-    <ul class="cards">
-      {
-        networkWork.map((item) => (
-          <li class="card">
-            <h3 class="card__title">{item.title}</h3>
-            <p class="card__teaser">{item.teaser}</p>
-            <ul class="card__tags">
-              {item.tags.map((tag) => (
-                <li class="tag">{tag}</li>
-              ))}
-            </ul>
-          </li>
-        ))
-      }
-    </ul>
-    <div class="note">
-      <p>
-        B.S. in Information Security and Forensics, Rochester Institute of
-        Technology — High Honors. Full history in the
-        <a href={site.resume}>resume</a>.
-      </p>
-    </div>
-  </Section>
+    <Section {...sub(engineering, "networks")} lede="Cisco IOS, BGP, OSPF, and carrier Ethernet — the layer everything else on this page runs on top of.">
+      <ul class="cards">
+        {
+          networkWork.map((item) => (
+            <li class="card">
+              <h4 class="card__title">{item.title}</h4>
+              <p class="card__teaser">{item.teaser}</p>
+              <ul class="card__tags">
+                {item.tags.map((tag) => (
+                  <li class="tag">{tag}</li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="note">
+        <p>
+          B.S. in Information Security and Forensics, Rochester Institute of
+          Technology — High Honors. Full history in the
+          <a href={site.resume}>resume</a>.
+        </p>
+      </div>
+    </Section>
 
-  <Section
-    id="ai"
-    accent="--hue-ai"
-    eyebrow="Agents, fleets, and pipelines"
-    title="AI Engineering"
-    lede="Systems that do real operational work — not demos. Each of these runs on hardware in my house, every day."
-  >
-    <ul class="cards">
-      {
-        caseStudies.map((study) => (
-          <li class="card">
-            <h3 class="card__title">{study.title}</h3>
-            <p class="card__teaser">{study.teaser}</p>
-            <ul class="card__tags">
-              {study.tags.map((tag) => (
-                <li class="tag">{tag}</li>
-              ))}
-            </ul>
-            <p class="card__note">Case study in progress</p>
-          </li>
-        ))
-      }
-    </ul>
-    <figure class="figure">
-      <Image
-        src={pcBuild}
-        alt="Two PC cases open on a workbench mid-build, one black and one white, with an AIO cooler, graphics card, and loose cabling visible."
-        widths={[640, 1024, 1600]}
-        sizes="(min-width: 60rem) 60rem, 100vw"
-        loading="lazy"
-      />
-      <figcaption>
-        Two of the fleet's machines mid-build. The homelab is hardware I
-        assembled, not appliances I bought.
-      </figcaption>
-    </figure>
-  </Section>
+    <Section {...sub(engineering, "ai")} lede="Systems that do real operational work — not demos. These run on hardware in my house, every day.">
+      <ul class="cards cards--wide">
+        {
+          caseStudies.map((study) => (
+            <li class="card">
+              <h4 class="card__title">{study.title}</h4>
+              <p class="card__teaser">{study.teaser}</p>
+              <ul class="card__tags">
+                {study.tags.map((tag) => (
+                  <li class="tag">{tag}</li>
+                ))}
+              </ul>
+              <p class="card__note">Case study in progress</p>
+            </li>
+          ))
+        }
+      </ul>
 
-  <Section
-    id="printing"
-    accent="--hue-print"
-    eyebrow="Design, slice, monitor, print"
-    title="3D Printing"
-    lede="Models I designed and printed, plus the monitoring pipeline that watches the printer so I don't have to."
-  >
-    <div class="grid grid--gallery">
-      <Placeholder label="GLB model — orbit viewer" ratio="1 / 1" />
-      <Placeholder label="GLB model — orbit viewer" ratio="1 / 1" />
-      <Placeholder label="GLB model — orbit viewer" ratio="1 / 1" />
-    </div>
-    <div class="note">
-      <p>
-        Next up here: the Bambu MQTT monitoring and timelapse pipeline, written
-        up as a case study with footage.
-      </p>
-    </div>
-  </Section>
-
-  <Section
-    id="music"
-    accent="--hue-music"
-    eyebrow="Production and sound design"
-    title="Music"
-    lede="Tracks I wrote and produced. Waveform players land with the audio."
-  >
-    <div class="grid grid--tracks">
-      <Placeholder label="Track 01 — waveform player" ratio="6 / 1" />
-      <Placeholder label="Track 02 — waveform player" ratio="6 / 1" />
-      <Placeholder label="Track 03 — waveform player" ratio="6 / 1" />
-    </div>
-  </Section>
-
-  <Section
-    id="art"
-    accent="--hue-art"
-    eyebrow="Paint now, VR murals next"
-    title="Art"
-    lede="Paintings, photographed straight-on. The next canvas is room-sized — murals painted in VR on a Quest."
-  >
-    <div class="grid grid--gallery">
-      <Placeholder label="Painting photo" ratio="3 / 4" />
-      <Placeholder label="Painting photo" ratio="3 / 4" />
-      <Placeholder label="Painting photo" ratio="3 / 4" />
-    </div>
-  </Section>
-
-  <Section
-    id="robotics"
-    accent="--hue-robotics"
-    eyebrow="Build log — in progress"
-    title="Robotics"
-    lede="The newest discipline, documented honestly as I learn it: what I'm building, what broke, and what it taught me."
-  >
-    <div class="note">
-      <p>
-        Build log entries start as soon as the first chassis moves under its own
-        power. Expect parts lists, failures, and short clips — not a finished
-        showreel.
-      </p>
-    </div>
-  </Section>
-
-  <Section
-    id="about"
-    accent="--color-accent"
-    eyebrow="Who's behind all this"
-    title="About & Contact"
-  >
-    <div class="about">
-      <div class="about__portrait">
+      <figure class="figure">
         <Image
-          src={portrait}
-          alt="Colton Spahmer on a boat at golden hour, in a wide-brimmed hat and fishing vest, holding a largemouth bass."
-          widths={[320, 640, 900]}
-          sizes="(min-width: 52rem) 22rem, 100vw"
+          src={pcBuild}
+          alt="Two PC cases open on a workbench mid-build, one black and one white, with an AIO cooler, graphics card, and loose cabling visible."
+          widths={[640, 1024, 1600]}
+          sizes="(min-width: 60rem) 60rem, 100vw"
           loading="lazy"
         />
-      </div>
+        <figcaption>
+          Two of the fleet's machines mid-build. The homelab is hardware I
+          assembled, not appliances I bought.
+        </figcaption>
+      </figure>
+    </Section>
 
-      <div class="about__body">
-        <div class="prose">
-          <p>
-            I'm Colton — a network engineer by trade and a builder by default.
-            Seven years of Cisco IOS, BGP, and carrier Ethernet taught me how
-            real infrastructure fails, which is why the AI systems I build now
-            run on hardware I racked myself.
-          </p>
-          <p>
-            B.S. in Information Security and Forensics from RIT, High Honors.
-            Off the clock it's paint, printers, a DAW, and a fly rod — the
-            fish above being the one time all of that stopped at once.
-          </p>
+    <Section {...sub(engineering, "printing")} lede="The engineering half of 3D printing: a monitoring pipeline that watches the printer so I don't have to.">
+      <div class="grid grid--gallery">
+        <Placeholder label="Bambu MQTT monitor — dashboard view" ratio="4 / 3" />
+        <Placeholder label="Timelapse capture pipeline" ratio="4 / 3" />
+      </div>
+      <div class="note">
+        <p>
+          Print telemetry over MQTT, automatic timelapse capture, and alerts
+          when a job fails at 3am. The objects it produces live in the
+          <a href="#objects">Studio</a>.
+        </p>
+      </div>
+    </Section>
+
+    <Section {...sub(engineering, "robotics")} lede="The newest discipline, documented honestly as I learn it: what I'm building, what broke, and what it taught me.">
+      <div class="note">
+        <p>
+          Build log entries start as soon as the first chassis moves under its
+          own power. Expect parts lists, failures, and short clips — not a
+          finished showreel.
+        </p>
+      </div>
+    </Section>
+  </Chapter>
+
+  <Chapter
+    id={studio.id}
+    title={studio.title}
+    lede={studio.lede}
+    accent={studio.accent}
+    index="02"
+  >
+    <Section {...sub(studio, "art")} lede="Paint, plaster, and grout — plus a Quest headset that's about to become a brush.">
+      <ul class="media-row" aria-label="Media">
+        {
+          media.map((m) => (
+            <li class="tag" style={`--section-accent: var(${m.accent});`}>
+              {m.label}
+            </li>
+          ))
+        }
+      </ul>
+      <div class="grid grid--gallery">
+        <Placeholder label="Painting" ratio="3 / 4" />
+        <Placeholder label="Sculpture" ratio="3 / 4" />
+        <Placeholder label="Mosaic" ratio="3 / 4" />
+      </div>
+      <div class="note">
+        <p>
+          Next canvas is room-sized: murals painted in VR on a Quest, then
+          brought back out into the physical world.
+        </p>
+      </div>
+    </Section>
+
+    <Section {...sub(studio, "music")} lede="Tracks I wrote and produced. Waveform players land with the audio.">
+      <div class="grid">
+        <Placeholder label="Track 01 — waveform player" ratio="6 / 1" />
+        <Placeholder label="Track 02 — waveform player" ratio="6 / 1" />
+        <Placeholder label="Track 03 — waveform player" ratio="6 / 1" />
+      </div>
+    </Section>
+
+    <Section {...sub(studio, "objects")} lede="The things the printer makes when it isn't making parts — modelled by me, kept because I liked them.">
+      <div class="grid grid--gallery">
+        <Placeholder label="GLB model — orbit viewer" ratio="1 / 1" />
+        <Placeholder label="GLB model — orbit viewer" ratio="1 / 1" />
+        <Placeholder label="GLB model — orbit viewer" ratio="1 / 1" />
+      </div>
+    </Section>
+  </Chapter>
+
+  <section class="about-section" id={about.id} style={`--section-accent: var(${about.accent});`}>
+    <div class="container container--wide">
+      <p class="about__eyebrow">{about.eyebrow}</p>
+      <h2 class="about__title">{about.title}</h2>
+
+      <div class="about">
+        <div class="about__portrait">
+          <Image
+            src={portrait}
+            alt="Colton Spahmer on a boat at golden hour, in a wide-brimmed hat and fishing vest, holding a largemouth bass."
+            widths={[320, 640, 900]}
+            sizes="(min-width: 52rem) 22rem, 100vw"
+            loading="lazy"
+          />
         </div>
 
-        <div class="about__links">
-          <a class="about__link" href={`mailto:${site.email}`}>{site.email}</a>
-          <a class="about__link" href={site.linkedin} rel="me noopener"
-            >linkedin.com/in/coltonspahmer</a
-          >
-          <a class="about__link" href={site.github} rel="me noopener"
-            >github.com/unorthabox</a
-          >
-          <a class="about__link about__link--cta" href={site.resume}>
-            Resume (PDF)
-          </a>
+        <div class="about__body">
+          <div class="prose">
+            <p>
+              I'm Colton — a network engineer by trade and a builder by default.
+              Seven years of Cisco IOS, BGP, and carrier Ethernet taught me how
+              real infrastructure fails, which is why the AI systems I build now
+              run on hardware I racked myself.
+            </p>
+            <p>
+              B.S. in Information Security and Forensics from RIT, High Honors.
+              Off the clock it's paint, printers, a DAW, and a fly rod — the
+              fish above being the one time all of that stopped at once.
+            </p>
+          </div>
+
+          <div class="about__links">
+            <a class="about__link" href={`mailto:${site.email}`}>{site.email}</a>
+            <a class="about__link" href={site.linkedin} rel="me noopener"
+              >linkedin.com/in/coltonspahmer</a
+            >
+            <a class="about__link" href={site.github} rel="me noopener"
+              >github.com/unorthabox</a
+            >
+            <a class="about__link about__link--cta" href={site.resume}>
+              Resume (PDF)
+            </a>
+          </div>
         </div>
       </div>
     </div>
-  </Section>
+  </section>
 </Base>
 
 <style>
   .cards,
-  .card__tags {
+  .card__tags,
+  .media-row {
     list-style: none;
     padding: 0;
   }
 
-  /* Two case studies, so the min track is wide enough that the grid resolves to
-     a 2-up and never tries for a thin third column. */
   .cards {
     display: grid;
     gap: var(--space-md);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  }
+
+  /* Two case studies, so the min track is wide enough that the grid resolves
+     to a 2-up and never tries for a thin third column. */
+  .cards--wide {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
   }
 
@@ -251,13 +271,17 @@ const caseStudies = [
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
-    padding: var(--space-lg);
+    padding: var(--space-md);
     border-radius: var(--radius-lg);
     border: var(--border-hairline) solid var(--color-border);
     background: var(--color-surface);
     transition: border-color var(--duration-base) var(--ease-out),
       transform var(--duration-base) var(--ease-out),
       box-shadow var(--duration-base) var(--ease-out);
+  }
+
+  .cards--wide .card {
+    padding: var(--space-lg);
   }
 
   .card:hover {
@@ -272,14 +296,27 @@ const caseStudies = [
 
   .card__teaser {
     color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .cards--wide .card__teaser {
     font-size: var(--text-md);
   }
 
-  .card__tags {
+  .card__tags,
+  .media-row {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-3xs);
+  }
+
+  .card__tags {
     margin-top: auto;
+  }
+
+  .media-row {
+    gap: var(--space-2xs);
+    margin-bottom: var(--space-md);
   }
 
   .tag {
@@ -291,8 +328,13 @@ const caseStudies = [
     letter-spacing: var(--tracking-wide);
   }
 
-  .card__note,
-  .about__pending {
+  .media-row .tag {
+    font-size: var(--text-xs);
+    border: var(--border-hairline) solid
+      color-mix(in oklab, var(--section-accent) 40%, transparent);
+  }
+
+  .card__note {
     font-family: var(--font-mono);
     font-size: var(--text-2xs);
     letter-spacing: var(--tracking-wide);
@@ -306,10 +348,6 @@ const caseStudies = [
 
   .grid--gallery {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-  }
-
-  .grid--tracks {
-    grid-template-columns: 1fr;
   }
 
   .note {
@@ -340,6 +378,40 @@ const caseStudies = [
     font-size: var(--text-sm);
     color: var(--color-text-muted);
     max-width: var(--width-prose);
+  }
+
+  /* --- About -------------------------------------------------------------
+     Sits outside the chapters and closes the page. */
+
+  .about-section {
+    padding-block: var(--space-section);
+    scroll-margin-top: var(--nav-height);
+    border-top: var(--border-hairline) solid var(--color-border);
+  }
+
+  .about__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--section-accent);
+    margin-bottom: var(--space-2xs);
+  }
+
+  .about__eyebrow::before {
+    content: "";
+    width: var(--space-md);
+    height: var(--border-thick);
+    border-radius: var(--radius-pill);
+    background: currentColor;
+  }
+
+  .about__title {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-xl);
   }
 
   .about {
@@ -381,6 +453,7 @@ const caseStudies = [
     color: var(--color-text-muted);
     text-decoration: none;
     word-break: break-all;
+    width: fit-content;
   }
 
   .about__link:hover {
@@ -395,7 +468,6 @@ const caseStudies = [
     color: var(--color-text);
     font-family: var(--font-sans);
     font-weight: var(--weight-semibold);
-    width: fit-content;
     word-break: normal;
   }
 
@@ -404,7 +476,7 @@ const caseStudies = [
     color: var(--section-accent);
   }
 
-  .about .prose p + p {
+  .prose p + p {
     margin-top: var(--space-sm);
   }
 </style>

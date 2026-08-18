@@ -1,0 +1,83 @@
+---
+/**
+ * A top-level division of the page. Two exist: Engineering and Studio.
+ * Renders a full-width banded header, then hands off to subsections which
+ * carry their own accent hues.
+ */
+interface Props {
+  id: string;
+  title: string;
+  lede: string;
+  /** Token name (e.g. "--hue-network") that tints the chapter header. */
+  accent: string;
+  /** Chapter number shown in the header, e.g. "01". */
+  index: string;
+}
+
+const { id, title, lede, accent, index } = Astro.props;
+---
+
+<section class="chapter" id={id} style={`--section-accent: var(${accent});`}>
+  <header class="chapter__header">
+    <div class="container container--wide">
+      <p class="chapter__index">{index}</p>
+      <h2 class="chapter__title">{title}</h2>
+      <p class="chapter__lede prose">{lede}</p>
+    </div>
+  </header>
+
+  <div class="chapter__body">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .chapter {
+    scroll-margin-top: var(--nav-height);
+  }
+
+  .chapter__header {
+    position: relative;
+    padding-block: var(--space-2xl) var(--space-xl);
+    border-top: var(--border-hairline) solid var(--color-border);
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--section-accent) 9%, transparent),
+      transparent
+    );
+  }
+
+  /* Accent rule across the top edge, so each chapter announces itself. */
+  .chapter__header::before {
+    content: "";
+    position: absolute;
+    inset-block-start: -1px;
+    inset-inline: 0;
+    height: var(--border-thick);
+    background: linear-gradient(
+      90deg,
+      var(--section-accent),
+      transparent 65%
+    );
+  }
+
+  .chapter__index {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-widest);
+    color: var(--section-accent);
+    margin-bottom: var(--space-2xs);
+  }
+
+  .chapter__title {
+    font-size: var(--text-4xl);
+    letter-spacing: var(--tracking-tighter);
+  }
+
+  .chapter__lede {
+    margin-top: var(--space-sm);
+    font-size: var(--text-lg);
+    line-height: var(--leading-snug);
+    color: var(--color-text-muted);
+  }
+</style>

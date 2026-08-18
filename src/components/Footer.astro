@@ -1,5 +1,5 @@
 ---
-import { sections, site } from "../data/site";
+import { about, chapters, site } from "../data/site";
 
 const year = new Date().getFullYear();
 ---
@@ -13,21 +13,37 @@ const year = new Date().getFullYear();
 
     <nav class="footer__nav" aria-label="Sections">
       {
-        sections.map((section) => (
-          <a
-            class="footer__link"
-            href={`#${section.id}`}
-            style={`--section-accent: var(${section.accent});`}
-          >
-            {section.title}
-          </a>
+        chapters.map((chapter) => (
+          <div class="footer__group">
+            <a
+              class="footer__link footer__link--head"
+              href={`#${chapter.id}`}
+              style={`--section-accent: var(${chapter.accent});`}
+            >
+              {chapter.title}
+            </a>
+            {chapter.subsections.map((sub) => (
+              <a
+                class="footer__link"
+                href={`#${sub.id}`}
+                style={`--section-accent: var(${sub.accent});`}
+              >
+                {sub.title}
+              </a>
+            ))}
+          </div>
         ))
       }
+      <a class="footer__link footer__link--head" href={`#${about.id}`}>
+        {about.title}
+      </a>
     </nav>
 
     <div class="footer__contact">
       <a class="footer__link" href={site.github} rel="me noopener">GitHub</a>
+      <a class="footer__link" href={site.linkedin} rel="me noopener">LinkedIn</a>
       <a class="footer__link" href={`mailto:${site.email}`}>Email</a>
+      <a class="footer__link" href={site.resume}>Resume (PDF)</a>
     </div>
   </div>
 
@@ -65,7 +81,14 @@ const year = new Date().getFullYear();
     letter-spacing: var(--tracking-wide);
   }
 
-  .footer__nav,
+  .footer__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xl);
+    align-items: flex-start;
+  }
+
+  .footer__group,
   .footer__contact {
     display: flex;
     flex-direction: column;
@@ -77,6 +100,11 @@ const year = new Date().getFullYear();
     color: var(--color-text-muted);
     text-decoration: none;
     width: fit-content;
+  }
+
+  .footer__link--head {
+    color: var(--color-text-strong);
+    font-weight: var(--weight-semibold);
   }
 
   .footer__link:hover {
