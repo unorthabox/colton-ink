@@ -11,7 +11,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "resume": "weasyprint -s resume/public.css resume/resume.html public/resume.pdf",
-    "resume:full": "weasyprint resume/resume.html \"$HOME/assets-archive/Colton_Spahmer_Resume.pdf\""
+    "resume:full": "weasyprint resume/resume.html \"$HOME/assets-archive/Colton_Spahmer_Resume.pdf\"",
+    "design": "node scripts/build-design.mjs"
   },
   "dependencies": {
     "astro": "^7.2.2"

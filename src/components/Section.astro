@@ -24,14 +24,3 @@ const { id, eyebrow, title, lede, accent } = Astro.props;
   </div>
 </section>
 
-<style>
-  .section {
-    padding-block: var(--space-xl);
-    scroll-margin-top: var(--nav-height);
-  }
-
-  /* Hairline between siblings only — the chapter header supplies the first. */
-  .section + .section {
-    border-top: var(--border-hairline) solid var(--color-border);
-  }
-</style>
