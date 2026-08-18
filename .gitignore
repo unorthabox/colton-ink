@@ -25,3 +25,7 @@ pnpm-debug.log*
 
 # originals live outside the repo (~/assets-archive); only processed,
 # EXIF-stripped derivatives are committed
+
+# contact details for the full resume build — never committed
+resume/private.json
+resume/.full.html
