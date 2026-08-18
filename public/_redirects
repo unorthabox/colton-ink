@@ -1,3 +1,0 @@
-# www and apex both resolve to this Pages project; send www to the apex so
-# there is one canonical hostname rather than two identical sites.
-https://www.colton.ink/* https://colton.ink/:splat 301
