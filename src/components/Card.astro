@@ -1,0 +1,40 @@
+---
+import TagPill from "./TagPill.astro";
+
+interface Props {
+  title: string;
+  teaser: string;
+  tags?: string[];
+  /** Small mono line at the foot, e.g. "Case study in progress". */
+  note?: string;
+  /** Roomier padding and larger teaser, for two-up feature grids. */
+  feature?: boolean;
+  /** Heading level — cards nested under an h3 subsection use 4. */
+  level?: 3 | 4;
+}
+
+const {
+  title,
+  teaser,
+  tags = [],
+  note,
+  feature = false,
+  level = 4,
+} = Astro.props;
+const Heading = `h${level}` as "h3" | "h4";
+---
+
+<li class:list={["card", feature && "card--feature"]}>
+  <Heading class="card__title">{title}</Heading>
+  <p class="card__teaser">{teaser}</p>
+  {
+    tags.length > 0 && (
+      <ul class="tag-row card__tags">
+        {tags.map((tag) => (
+          <TagPill>{tag}</TagPill>
+        ))}
+      </ul>
+    )
+  }
+  {note && <p class="card__note">{note}</p>}
+</li>

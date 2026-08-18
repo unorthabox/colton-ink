@@ -1,0 +1,47 @@
+---
+/**
+ * One dialog per page, shared by every gallery tile. Built on <dialog>, so
+ * Escape, focus trapping, and the backdrop are the platform's job rather than
+ * script's. Tiles are <button>s, so with JS off nothing claims to be clickable
+ * that isn't.
+ */
+---
+
+<dialog class="lightbox" data-lightbox aria-label="Enlarged image">
+  <button class="lightbox__close" type="button" data-lightbox-close aria-label="Close">
+    ✕
+  </button>
+  <figure class="lightbox__figure">
+    <img data-lightbox-img src="" alt="" />
+    <figcaption class="lightbox__caption" data-lightbox-caption></figcaption>
+  </figure>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>("[data-lightbox]");
+  const img = document.querySelector<HTMLImageElement>("[data-lightbox-img]");
+  const caption = document.querySelector<HTMLElement>("[data-lightbox-caption]");
+
+  if (dialog && img && caption) {
+    document.querySelectorAll<HTMLButtonElement>("[data-lightbox-open]").forEach((tile) => {
+      tile.addEventListener("click", () => {
+        const source = tile.querySelector("img");
+        if (!source) return;
+        // Prefer the largest candidate the browser already knows about.
+        img.src = source.currentSrc || source.src;
+        img.alt = source.alt;
+        caption.textContent = tile.dataset.caption ?? "";
+        dialog.showModal();
+      });
+    });
+
+    dialog
+      .querySelector("[data-lightbox-close]")
+      ?.addEventListener("click", () => dialog.close());
+
+    // Click outside the figure closes it, matching the usual expectation.
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  }
+</script>

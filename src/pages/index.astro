@@ -3,6 +3,12 @@ import Base from "../layouts/Base.astro";
 import Hero from "../components/Hero.astro";
 import Chapter from "../components/Chapter.astro";
 import Section from "../components/Section.astro";
+import Card from "../components/Card.astro";
+import GalleryTile from "../components/GalleryTile.astro";
+import Lightbox from "../components/Lightbox.astro";
+import AudioPlayer from "../components/AudioPlayer.astro";
+import ContactBlock from "../components/ContactBlock.astro";
+import TagPill from "../components/TagPill.astro";
 import Placeholder from "../components/Placeholder.astro";
 import { Image } from "astro:assets";
 import { about, chapters, site } from "../data/site";
@@ -68,20 +74,8 @@ const media = [
     index="01"
   >
     <Section {...sub(engineering, "networks")} lede="Cisco IOS, BGP, OSPF, and carrier Ethernet — the layer everything else on this page runs on top of.">
-      <ul class="cards">
-        {
-          networkWork.map((item) => (
-            <li class="card">
-              <h4 class="card__title">{item.title}</h4>
-              <p class="card__teaser">{item.teaser}</p>
-              <ul class="card__tags">
-                {item.tags.map((tag) => (
-                  <li class="tag">{tag}</li>
-                ))}
-              </ul>
-            </li>
-          ))
-        }
+      <ul class="card-grid">
+        {networkWork.map((item) => <Card {...item} />)}
       </ul>
       <div class="note">
         <p>
@@ -93,19 +87,10 @@ const media = [
     </Section>
 
     <Section {...sub(engineering, "ai")} lede="Systems that do real operational work — not demos. These run on hardware in my house, every day.">
-      <ul class="cards cards--wide">
+      <ul class="card-grid card-grid--feature">
         {
           caseStudies.map((study) => (
-            <li class="card">
-              <h4 class="card__title">{study.title}</h4>
-              <p class="card__teaser">{study.teaser}</p>
-              <ul class="card__tags">
-                {study.tags.map((tag) => (
-                  <li class="tag">{tag}</li>
-                ))}
-              </ul>
-              <p class="card__note">Case study in progress</p>
-            </li>
+            <Card {...study} feature note="Case study in progress" />
           ))
         }
       </ul>
@@ -144,20 +129,14 @@ const media = [
     index="02"
   >
     <Section {...sub(studio, "art")} lede="Paint, plaster, and grout — plus a Quest headset that's about to become a brush.">
-      <ul class="media-row" aria-label="Media">
-        {
-          media.map((m) => (
-            <li class="tag" style={`--section-accent: var(${m.accent});`}>
-              {m.label}
-            </li>
-          ))
-        }
+      <ul class="tag-row tag-row--loose media-row" aria-label="Media">
+        {media.map((m) => <TagPill variant="outline">{m.label}</TagPill>)}
       </ul>
-      <div class="grid grid--gallery">
-        <Placeholder label="Painting" ratio="3 / 4" />
-        <Placeholder label="Sculpture" ratio="3 / 4" />
-        <Placeholder label="Mosaic" ratio="3 / 4" />
-      </div>
+      <ul class="gallery">
+        <GalleryTile caption="Painting" />
+        <GalleryTile caption="Sculpture" />
+        <GalleryTile caption="Mosaic" />
+      </ul>
       <div class="note">
         <p>
           Next canvas is room-sized: murals painted in VR on a Quest, then
@@ -168,24 +147,24 @@ const media = [
 
     <Section {...sub(studio, "music")} lede="Tracks I wrote and produced. Waveform players land with the audio.">
       <div class="grid">
-        <Placeholder label="Track 01 — waveform player" ratio="6 / 1" />
-        <Placeholder label="Track 02 — waveform player" ratio="6 / 1" />
-        <Placeholder label="Track 03 — waveform player" ratio="6 / 1" />
+        <AudioPlayer title="Track 01" meta="awaiting audio" />
+        <AudioPlayer title="Track 02" meta="awaiting audio" />
+        <AudioPlayer title="Track 03" meta="awaiting audio" />
       </div>
     </Section>
 
     <Section {...sub(studio, "objects")} lede="The things the printer makes when it isn't making parts — modelled by me, kept because I liked them.">
-      <div class="grid grid--gallery">
-        <Placeholder label="GLB model — orbit viewer" ratio="1 / 1" />
-        <Placeholder label="GLB model — orbit viewer" ratio="1 / 1" />
-        <Placeholder label="GLB model — orbit viewer" ratio="1 / 1" />
-      </div>
+      <ul class="gallery">
+        <GalleryTile caption="GLB model — orbit viewer" ratio="1 / 1" />
+        <GalleryTile caption="GLB model — orbit viewer" ratio="1 / 1" />
+        <GalleryTile caption="GLB model — orbit viewer" ratio="1 / 1" />
+      </ul>
     </Section>
   </Chapter>
 
   <section class="about-section" id={about.id} style={`--section-accent: var(${about.accent});`}>
     <div class="container container--wide">
-      <p class="about__eyebrow">{about.eyebrow}</p>
+      <p class="eyebrow">{about.eyebrow}</p>
       <h2 class="about__title">{about.title}</h2>
 
       <div class="about">
@@ -214,134 +193,40 @@ const media = [
             </p>
           </div>
 
-          <div class="about__links">
-            <a class="about__link" href={site.linkedin} rel="me noopener"
-              >linkedin.com/in/coltonspahmer</a
-            >
-            <a class="about__link" href={site.github} rel="me noopener"
-              >github.com/unorthabox</a
-            >
-            <a class="about__link about__link--cta" href={site.resume}>
-              Resume (PDF)
-            </a>
-          </div>
+          <ContactBlock />
         </div>
       </div>
     </div>
   </section>
+
+  <Lightbox />
 </Base>
 
 <style>
-  .cards,
-  .card__tags,
-  .media-row {
-    list-style: none;
-    padding: 0;
-  }
 
-  .cards {
-    display: grid;
-    gap: var(--space-md);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-  }
 
-  /* Two case studies, so the min track is wide enough that the grid resolves
-     to a 2-up and never tries for a thin third column. */
-  .cards--wide {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
-  }
 
-  .card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-    padding: var(--space-md);
-    border-radius: var(--radius-lg);
-    border: var(--border-hairline) solid var(--color-border);
-    background: var(--color-surface);
-    transition: border-color var(--duration-base) var(--ease-out),
-      transform var(--duration-base) var(--ease-out),
-      box-shadow var(--duration-base) var(--ease-out);
-  }
 
-  .cards--wide .card {
-    padding: var(--space-lg);
-  }
 
-  .card:hover {
-    transform: translateY(-3px);
-    border-color: color-mix(in oklab, var(--section-accent) 55%, transparent);
-    box-shadow: var(--shadow-md);
-  }
 
-  .card__title {
-    font-size: var(--text-lg);
-  }
 
-  .card__teaser {
-    color: var(--color-text-muted);
-    font-size: var(--text-sm);
-  }
 
-  .cards--wide .card__teaser {
-    font-size: var(--text-md);
-  }
 
-  .card__tags,
-  .media-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3xs);
-  }
 
-  .card__tags {
-    margin-top: auto;
-  }
 
   .media-row {
-    gap: var(--space-2xs);
     margin-bottom: var(--space-md);
   }
 
-  .tag {
-    padding: var(--space-3xs) var(--space-xs);
-    border-radius: var(--radius-pill);
-    background: color-mix(in oklab, var(--section-accent) 12%, transparent);
-    color: var(--section-accent);
-    font-size: var(--text-2xs);
-    letter-spacing: var(--tracking-wide);
-  }
 
-  .media-row .tag {
-    font-size: var(--text-xs);
-    border: var(--border-hairline) solid
-      color-mix(in oklab, var(--section-accent) 40%, transparent);
-  }
 
-  .card__note {
-    font-family: var(--font-mono);
-    font-size: var(--text-2xs);
-    letter-spacing: var(--tracking-wide);
-    color: var(--color-text-muted);
-  }
 
   .grid {
     display: grid;
     gap: var(--space-md);
   }
 
-  .grid--gallery {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-  }
 
-  .note {
-    margin-top: var(--space-lg);
-    padding-left: var(--space-sm);
-    border-left: var(--border-thick) solid
-      color-mix(in oklab, var(--section-accent) 60%, transparent);
-    color: var(--color-text-muted);
-    max-width: var(--width-prose);
-  }
 
 
   /* --- About -------------------------------------------------------------
@@ -353,25 +238,7 @@ const media = [
     border-top: var(--border-hairline) solid var(--color-border);
   }
 
-  .about__eyebrow {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2xs);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    letter-spacing: var(--tracking-widest);
-    text-transform: uppercase;
-    color: var(--section-accent);
-    margin-bottom: var(--space-2xs);
-  }
 
-  .about__eyebrow::before {
-    content: "";
-    width: var(--space-md);
-    height: var(--border-thick);
-    border-radius: var(--radius-pill);
-    background: currentColor;
-  }
 
   .about__title {
     font-size: var(--text-3xl);
@@ -405,40 +272,10 @@ const media = [
     gap: var(--space-lg);
   }
 
-  .about__links {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2xs);
-  }
 
-  .about__link {
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    text-decoration: none;
-    word-break: break-all;
-    width: fit-content;
-  }
 
-  .about__link:hover {
-    color: var(--section-accent);
-  }
 
-  .about__link--cta {
-    margin-top: var(--space-2xs);
-    padding: var(--space-2xs) var(--space-sm);
-    border-radius: var(--radius-pill);
-    border: var(--border-hairline) solid var(--color-border-strong);
-    color: var(--color-text);
-    font-family: var(--font-sans);
-    font-weight: var(--weight-semibold);
-    word-break: normal;
-  }
 
-  .about__link--cta:hover {
-    border-color: var(--section-accent);
-    color: var(--section-accent);
-  }
 
   .prose p + p {
     margin-top: var(--space-sm);

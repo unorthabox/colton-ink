@@ -1,0 +1,42 @@
+---
+/**
+ * Renders an <a> when it has an href, and an inert <span> when disabled —
+ * a disabled anchor is still focusable and followable, a span is neither.
+ */
+interface Props {
+  href?: string;
+  variant?: "primary" | "ghost";
+  size?: "default" | "small";
+  disabled?: boolean;
+  rel?: string;
+}
+
+const {
+  href,
+  variant = "primary",
+  size = "default",
+  disabled = false,
+  rel,
+} = Astro.props;
+
+const cls = [
+  "btn",
+  `btn--${variant}`,
+  size === "small" && "btn--small",
+  disabled && "btn--disabled",
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+{
+  disabled || !href ? (
+    <span class={cls} aria-disabled="true">
+      <slot />
+    </span>
+  ) : (
+    <a class={cls} href={href} rel={rel}>
+      <slot />
+    </a>
+  )
+}

@@ -1,0 +1,16 @@
+---
+/**
+ * The contact column. Email is deliberately absent site-wide; see site.ts.
+ */
+import { site } from "../data/site";
+---
+
+<div class="contact">
+  <a class="contact__link" href={site.linkedin} rel="me noopener">
+    linkedin.com/in/coltonspahmer
+  </a>
+  <a class="contact__link" href={site.github} rel="me noopener">
+    github.com/unorthabox
+  </a>
+  <a class="contact__link contact__cta" href={site.resume}>Resume (PDF)</a>
+</div>

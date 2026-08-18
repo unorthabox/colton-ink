@@ -12,46 +12,8 @@ const Heading = `h${level}` as "h2" | "h3";
 ---
 
 <div class="section-header">
-  <p class="section-header__eyebrow">{eyebrow}</p>
+  <p class="eyebrow">{eyebrow}</p>
   <Heading class="section-header__title">{title}</Heading>
   {lede && <p class="section-header__lede prose">{lede}</p>}
 </div>
 
-<style>
-  .section-header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2xs);
-    margin-bottom: var(--space-lg);
-  }
-
-  .section-header__title {
-    font-size: var(--text-2xl);
-  }
-
-  .section-header__eyebrow {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2xs);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    letter-spacing: var(--tracking-widest);
-    text-transform: uppercase;
-    color: var(--section-accent);
-  }
-
-  .section-header__eyebrow::before {
-    content: "";
-    width: var(--space-md);
-    height: var(--border-thick);
-    border-radius: var(--radius-pill);
-    background: currentColor;
-  }
-
-  .section-header__lede {
-    color: var(--color-text-muted);
-    font-size: var(--text-lg);
-    line-height: var(--leading-snug);
-    margin-top: var(--space-2xs);
-  }
-</style>

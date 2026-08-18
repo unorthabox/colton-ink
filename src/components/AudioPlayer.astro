@@ -1,0 +1,30 @@
+---
+/**
+ * Audio player shell. The .audio__wave region is sized but empty until
+ * wavesurfer.js mounts into it, so nothing shifts when the waveform draws.
+ * A plain <audio> element sits underneath as the no-JS fallback.
+ */
+interface Props {
+  title: string;
+  meta?: string;
+  /** Path under public/, e.g. "/audio/01-track.mp3". Omit for the shell. */
+  src?: string;
+}
+
+const { title, meta, src } = Astro.props;
+---
+
+<div class="audio">
+  <button class="audio__play" type="button" aria-label={`Play ${title}`}>
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <path d="M8 5v14l11-7z" fill="currentColor"></path>
+    </svg>
+  </button>
+
+  <div class="audio__body">
+    <p class="audio__title">{title}</p>
+    {meta && <p class="audio__meta">{meta}</p>}
+    <div class="audio__wave" data-waveform data-src={src}></div>
+    {src && <audio class="visually-hidden" controls preload="none" src={src} />}
+  </div>
+</div>

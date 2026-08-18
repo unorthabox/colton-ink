@@ -1,0 +1,40 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+
+/**
+ * A gallery tile. With an image it renders a button that opens the shared
+ * lightbox; without one it renders the placeholder, so a gallery can be laid
+ * out before its photographs exist.
+ */
+interface Props {
+  caption: string;
+  src?: ImageMetadata;
+  alt?: string;
+  /** CSS aspect-ratio, e.g. "3 / 4". */
+  ratio?: string;
+}
+
+const { caption, src, alt, ratio = "3 / 4" } = Astro.props;
+---
+
+<li>
+  {
+    src ? (
+      <button
+        class="tile"
+        type="button"
+        style={`aspect-ratio: ${ratio};`}
+        data-lightbox-open
+        data-caption={caption}
+      >
+        <Image src={src} alt={alt ?? caption} widths={[320, 640, 960]} sizes="(min-width: 52rem) 20rem, 50vw" loading="lazy" />
+        <span class="tile__caption">{caption}</span>
+      </button>
+    ) : (
+      <div class="placeholder" style={`aspect-ratio: ${ratio};`}>
+        <span class="placeholder__label">{caption}</span>
+      </div>
+    )
+  }
+</li>

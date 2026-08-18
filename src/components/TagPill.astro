@@ -1,0 +1,16 @@
+---
+interface Props {
+  variant?: "solid" | "outline";
+  /** Optional token name to tint this pill independently of its section. */
+  accent?: string;
+}
+
+const { variant = "solid", accent } = Astro.props;
+---
+
+<li
+  class:list={["tag", variant === "outline" && "tag--outline"]}
+  style={accent ? `--section-accent: var(${accent});` : undefined}
+>
+  <slot />
+</li>
