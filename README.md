@@ -68,11 +68,22 @@ with JS off the site follows the system preference.
 
 ### `design/` previews
 
-Reusable components each get a standalone preview HTML in `design/` whose first
-line is `<!-- @dsCard group="..." -->` (groups: Brand, Type, Components,
-Sections). Previews inline `tokens.css` so they render on their own, and are
-pushed to the "colton-ink DS" project via DesignSync. *(Added in the
-component-library pass.)*
+```bash
+npm run design     # regenerates design/ from the real stylesheets
+```
+
+Thirteen standalone previews, each with `<!-- @dsCard group="..." -->` on line
+one (groups: Brand, Type, Components, Sections). `scripts/build-design.mjs`
+inlines the actual `tokens.css`, `base.css`, and `components.css` — not copies
+— so a preview cannot drift from the site. Edit a token, re-run, every card
+updates.
+
+Pushed to the **colton-ink DS** project at claude.ai/design via the DesignSync
+tool. Re-run `npm run design` before any push so the previews match `main`.
+
+Previews are marked-up copies rather than imports, which lets one card show
+several states at once — a card in both grid densities, buttons across three
+section accents, a tile with and without its image.
 
 ## Layout
 
@@ -83,8 +94,13 @@ src/
   styles/tokens.css   design tokens — the one file to restyle
   styles/base.css     reset + element defaults
   layouts/Base.astro  <head>, no-flash theme script, nav + footer shell
-  components/         Nav, Footer, Hero, Section, SectionHeader, Placeholder
-  pages/index.astro   the single page: hero + six sections
+  styles/components.css  every component's CSS — no .astro file has a <style>
+  components/         Button, TagPill, Card, GalleryTile, Lightbox,
+                      AudioPlayer, ContactBlock, Nav, Footer, Hero, Chapter,
+                      Section, SectionHeader, Placeholder
+  pages/index.astro   the single page: hero + two chapters + about
+design/               generated standalone previews (npm run design)
+scripts/              the preview generator
 ```
 
 ## Content still to land
