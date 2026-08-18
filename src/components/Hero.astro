@@ -40,7 +40,9 @@ const disciplines = [
 
       <div class="hero__actions">
         <a class="btn btn--primary" href="#engineering">See the work</a>
-        <a class="btn btn--ghost" href={`mailto:${site.email}`}>Get in touch</a>
+        <span class="btn btn--ghost btn--disabled" aria-disabled="true">
+          Get in touch
+        </span>
       </div>
     </div>
 
@@ -182,6 +184,17 @@ const disciplines = [
   .btn--ghost:hover {
     border-color: var(--color-accent);
     color: var(--color-accent);
+  }
+
+  /* Not a link — no href, no focus, no hover lift. */
+  .btn--disabled,
+  .btn--disabled:hover {
+    border-color: var(--color-border);
+    color: var(--color-text-muted);
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 
   /* --- Visual stage ---------------------------------------------------- */

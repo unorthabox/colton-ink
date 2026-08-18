@@ -14,7 +14,12 @@ export const site = {
   tagline: "network + AI engineer · maker · artist",
   description:
     "Network engineering, AI systems, 3D printing, music production, painting, and robotics — the work of Colton Spahmer.",
-  email: "[redacted]",
+  /**
+   * Email is deliberately absent from the site for now — an address in the
+   * markup is the easiest thing on a page for a scraper to harvest. Contact
+   * runs through LinkedIn until it comes back. The address still appears in
+   * resume.pdf, which is linked from the page.
+   */
   github: "https://github.com/unorthabox",
   linkedin: "https://linkedin.com/in/coltonspahmer",
   /** Redacted web copy — the full version goes out with applications. */
