@@ -47,7 +47,7 @@ export const chapters: Chapter[] = [
     id: "engineering",
     label: "Engineering",
     title: "Engineering",
-    lede: "Seven years keeping carrier networks alive, and everything I've built on top of them since — agents, fleets, and the machines they run on.",
+    lede: "Over a decade keeping carrier networks alive, and everything I've built on top of them since — agents, fleets, and the machines they run on.",
     accent: "--hue-network",
     subsections: [
       {
