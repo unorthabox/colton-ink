@@ -40,19 +40,36 @@ const networkWork = [
   },
 ];
 
-/** Case studies get full 150–250 word writeups once screenshots land. */
+/**
+ * Full what/why/how writeups. `teaser` is the lede; `body` is slotted into the
+ * card underneath it. Deliberately free of hostnames, addresses, and port
+ * numbers — the point is to show how the systems are built, not to publish a
+ * map of them.
+ */
 const caseStudies = [
   {
     title: "Mission Control",
     teaser:
-      "The dashboard and agent fleet that runs my homelab — live status, job queues, and agents that pick up work without being asked. Work gets in by voice too: speak an intent, and an agent loop edits, tests, and reports back with a reviewed change.",
+      "The dashboard and agent fleet that runs my homelab — live status, job queues, and agents that pick up work without being asked.",
     tags: ["Agents", "Dashboard", "Voice"],
+    body: [
+      "Every homelab hits the same wall: the work is constant, small, and spread across machines, so most of it quietly never gets done. Mission Control is my answer — a status dashboard and a fleet of agents that pick work up without being asked.",
+      "The dashboard is the single pane. It polls every host and service on the network and renders one page: what is up, what is degraded, what is queued, and what an agent is doing right now. Watchdogs sit underneath it and restart anything that dies, so the fleet heals itself between the times I look at it.",
+      "The part I like most is how work gets in. Alongside the ordinary paths there is a voice one — hold a button on a headset, say what I want, and the transcript becomes an agent's brief. The agent edits, runs the tests, and comes back with a reviewed change instead of a promise. Push notifications close the loop when I am away from a desk.",
+      "None of it is a demo. It runs on hardware in my house, every day, and it only works because everything it touches had to be made restartable, observable, and safe to fail before it could be trusted to run unattended.",
+    ],
   },
   {
     title: "The homelab",
     teaser:
-      "A Proxmox host running the services I depend on daily — virtualization, networking, storage, and monitoring, all mine end to end. Sandboxed VMs give agents room to work without touching anything that matters.",
+      "A Proxmox host running the services I depend on daily — virtualization, networking, storage, and monitoring, all mine end to end.",
     tags: ["Proxmox", "Infra", "Self-hosted"],
+    body: [
+      "The lab is the substrate everything else on this page runs on. A Proxmox host carries the infrastructure: virtual machines and containers split by job, each small enough to rebuild from notes rather than nurse back to health. The services I depend on daily — databases, sync, notifications, the printer monitor, the dashboard itself — live in containers of their own, so taking one down for maintenance is not an outage for the rest.",
+      "The constraint I designed around is that agents need room to work without being able to touch anything that matters. Sandboxes are cloned from a template, firewalled at the hypervisor rather than trusted to behave, and rolled back by snapshot when a run ends. An agent that breaks its machine breaks only that machine, and it comes back in seconds.",
+      "Inference stays in the house. The Windows machines serve models over the LAN, so the fleet can think without sending anything out.",
+      "Nothing is clustered, on purpose. Each node stands alone, because clustering a lab this size buys coordination I do not need and quorum failures I would rather not debug at 2am. It is boring exactly where it should be boring.",
+    ],
   },
 ];
 
@@ -89,8 +106,12 @@ const media = [
     <Section {...sub(engineering, "ai")} lede="Systems that do real operational work — not demos. These run on hardware in my house, every day.">
       <ul class="card-grid card-grid--feature">
         {
-          caseStudies.map((study) => (
-            <Card {...study} feature note="Case study in progress" />
+          caseStudies.map(({ body, ...study }) => (
+            <Card {...study} feature>
+              {body.map((para) => (
+                <p>{para}</p>
+              ))}
+            </Card>
           ))
         }
       </ul>

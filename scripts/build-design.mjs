@@ -176,19 +176,22 @@ ${["5xl", "4xl", "3xl", "2xl", "xl", "lg", "md", "sm", "xs", "2xs"]
     title: "Case-study card",
     accent: "--hue-ai",
     body: `<div class="ds-stack">
-  <div><p class="ds-label">Feature — two-up grid</p>
+  <div><p class="ds-label">Feature — two-up grid, with and without a slotted body</p>
     <ul class="card-grid card-grid--feature">
       <li class="card card--feature">
         <h4 class="card__title">Mission Control</h4>
         <p class="card__teaser">The dashboard and agent fleet that runs my homelab — live status, job queues, and agents that pick up work without being asked.</p>
+        <div class="card__body">
+          <p>Every homelab hits the same wall: the work is constant, small, and spread across machines, so most of it quietly never gets done.</p>
+          <p>The dashboard is the single pane. Watchdogs sit underneath it and restart anything that dies, so the fleet heals itself between the times I look at it.</p>
+        </div>
         <ul class="tag-row card__tags"><li class="tag">Agents</li><li class="tag">Dashboard</li><li class="tag">Voice</li></ul>
-        <p class="card__note">Case study in progress</p>
       </li>
       <li class="card card--feature">
         <h4 class="card__title">The homelab</h4>
         <p class="card__teaser">A Proxmox host running the services I depend on daily — virtualization, networking, storage, and monitoring, all mine end to end.</p>
         <ul class="tag-row card__tags"><li class="tag">Proxmox</li><li class="tag">Infra</li><li class="tag">Self-hosted</li></ul>
-        <p class="card__note">Case study in progress</p>
+        <p class="card__note">Body omitted — teaser-only feature card</p>
       </li>
     </ul>
   </div>

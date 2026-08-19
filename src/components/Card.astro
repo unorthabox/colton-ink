@@ -13,6 +13,12 @@ interface Props {
   level?: 3 | 4;
 }
 
+/**
+ * The default slot is the long-form writeup. `teaser` stays the lede either
+ * way, so a card with no slotted content renders exactly as it did before.
+ */
+const hasBody = Astro.slots.has("default");
+
 const {
   title,
   teaser,
@@ -27,6 +33,13 @@ const Heading = `h${level}` as "h3" | "h4";
 <li class:list={["card", feature && "card--feature"]}>
   <Heading class="card__title">{title}</Heading>
   <p class="card__teaser">{teaser}</p>
+  {
+    hasBody && (
+      <div class="card__body">
+        <slot />
+      </div>
+    )
+  }
   {
     tags.length > 0 && (
       <ul class="tag-row card__tags">

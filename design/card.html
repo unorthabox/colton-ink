@@ -561,6 +561,28 @@ pre {
   font-size: var(--text-md);
 }
 
+/* The long-form case-study writeup. The teaser above it stays the lede, so
+   this layer only appears on cards that slot content in. Looser leading than
+   the teaser because it is read, not skimmed. */
+.card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  font-size: var(--text-sm);
+  line-height: var(--leading-loose);
+  color: var(--color-text);
+}
+
+.card__body > p {
+  margin: 0;
+}
+
+/* A body pushes the card tall, so give the tags real separation from the last
+   paragraph rather than letting margin-top:auto collapse against it. */
+.card__body + .tag-row {
+  margin-top: var(--space-sm);
+}
+
 .card__tags {
   margin-top: auto;
 }
@@ -1359,19 +1381,22 @@ html:not(.js) .nav__theme {
 </head>
 <body>
 <div class="ds-stack">
-  <div><p class="ds-label">Feature — two-up grid</p>
+  <div><p class="ds-label">Feature — two-up grid, with and without a slotted body</p>
     <ul class="card-grid card-grid--feature">
       <li class="card card--feature">
         <h4 class="card__title">Mission Control</h4>
         <p class="card__teaser">The dashboard and agent fleet that runs my homelab — live status, job queues, and agents that pick up work without being asked.</p>
+        <div class="card__body">
+          <p>Every homelab hits the same wall: the work is constant, small, and spread across machines, so most of it quietly never gets done.</p>
+          <p>The dashboard is the single pane. Watchdogs sit underneath it and restart anything that dies, so the fleet heals itself between the times I look at it.</p>
+        </div>
         <ul class="tag-row card__tags"><li class="tag">Agents</li><li class="tag">Dashboard</li><li class="tag">Voice</li></ul>
-        <p class="card__note">Case study in progress</p>
       </li>
       <li class="card card--feature">
         <h4 class="card__title">The homelab</h4>
         <p class="card__teaser">A Proxmox host running the services I depend on daily — virtualization, networking, storage, and monitoring, all mine end to end.</p>
         <ul class="tag-row card__tags"><li class="tag">Proxmox</li><li class="tag">Infra</li><li class="tag">Self-hosted</li></ul>
-        <p class="card__note">Case study in progress</p>
+        <p class="card__note">Body omitted — teaser-only feature card</p>
       </li>
     </ul>
   </div>
